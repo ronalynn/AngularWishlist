@@ -1,6 +1,12 @@
 import { Component } from '@angular/core';
 import { WishItem } from '../shared/models/wishItem';
 
+const filter = [
+  (item : WishItem) => item,
+  (item : WishItem) => !item.isComplete,
+  (item : WishItem) => item.isComplete
+]
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -16,8 +22,6 @@ export class AppComponent {
     new WishItem('iPhone 15 pro max')
   ];
  
-  visibleItems : WishItem[] = this.items;
-
   newWishText = '';
 
   addNewWish(){
@@ -31,15 +35,9 @@ export class AppComponent {
   }
 
   //filtering wishlist
-  listFilter : String = '0';
-
-  filterChanged(value: any){
-    if(value === '0'){
-      this.visibleItems = this.items;
-    } else if (value === '1'){
-      this.visibleItems = this.items.filter(item => !item.isComplete)
-    } else {
-      this.visibleItems = this.items.filter(item => item.isComplete)
-    }
+  get visibleItems() : WishItem[] {
+    return this.items.filter(filter[this.listFilter])
   }
+
+  listFilter : any = '0';
 }
