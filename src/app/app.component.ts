@@ -13,4 +13,9 @@ export class AppComponent {
     new WishItem('iPhone 15 pro max')
   ];
   title = 'Ronalyn\'s Wishlist';
+
+  toggleItem(item: WishItem){
+    item.isComplete = !item.isComplete;
+    console.log(item)
+  }
 }
